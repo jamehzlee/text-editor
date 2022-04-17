@@ -8,7 +8,8 @@ module.exports = () => {
     mode: 'development',
     entry: {
       main: './src/js/index.js',
-      install: './src/js/install.js'
+      install: './src/js/install.js',
+      database: './src/js/database.js',
     },
     output: {
       filename: '[name].bundle.js',
@@ -19,11 +20,17 @@ module.exports = () => {
         template: './index.html',
         title: 'Text Editor'
       }),
+      
+      new InjectManifest({
+        swSrc: './src-sw.js',
+        swDest: 'src-sw.js',
+      }),
 
       new WebpackPwaManifest({
         fingerprints: false,
         inject: true,
-        name: 'Text Editor',
+        name: 'Just Another Text Editor',
+        short_name: 'JATE',
         description: 'A text editor app you can use offline!',
         background_color: '#225ca3',
         theme_color: '#225ca3',
@@ -37,13 +44,6 @@ module.exports = () => {
           },
         ],
       }),
-
-      new InjectManifest({
-        swSrc: './src-sw.js',
-        swDest: 'src-sw.js'
-      }),
-
-
     ],
 
     module: {
